@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" defer src="app.js"></script>
+  <title>Analytics Dashboard — Face Sentinel</title>
+  <style>
+    .glass {
+      backdrop-filter: saturate(160%) blur(8px);
+      -webkit-backdrop-filter: saturate(160%) blur(8px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+
+<body
+  class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-100 relative overflow-x-hidden">
+  <!-- Decorative blobs -->
+  <div
+    class="pointer-events-none select-none absolute -top-24 -right-16 w-[28rem] h-[28rem] rounded-full bg-gradient-to-tr from-fuchsia-500/20 via-purple-500/20 to-blue-500/20 blur-3xl">
+  </div>
+  <div
+    class="pointer-events-none select-none absolute -bottom-24 -left-16 w-[30rem] h-[30rem] rounded-full bg-gradient-to-tr from-emerald-500/20 via-teal-400/20 to-cyan-400/20 blur-3xl">
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-4 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-3xl px-6 py-3 flex items-center justify-between shadow-lg">
+        <a href="index.html" class="inline-flex items-center gap-2">
+          <span
+            class="inline-block size-8 rounded-xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 shadow-inner"></span>
+          <span class="text-xl font-bold tracking-tight text-white">Face Sentinel</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="index.html#features" class="text-slate-200 hover:text-white transition">Features</a>
+          <a href="./about.html" class="text-slate-200 hover:text-white transition">About</a>
+          <a href="attendance.html" class="text-slate-200 hover:text-white transition">Attendance</a>
+          <a href="register.html" class="text-slate-200 hover:text-white transition">Register</a>
+        </nav>
+        <div class="hidden md:flex items-center gap-2">
+          <a href="index.html"
+            class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 transition">Home</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE HEADING -->
+  <section class="pt-10 md:pt-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
+          <span class="inline-block size-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Analytics Dashboard
+        </div>
+        <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">Attendance <span
+            class="bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-300 bg-clip-text text-transparent">Analytics</span>
+        </h1>
+        <p class="mt-1 text-slate-300">Comprehensive insights into attendance patterns and performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS CARDS -->
+  <section class="pt-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass rounded-2xl p-6">
+          <div class="text-sm text-slate-400">Total Students</div>
+          <div id="total-students" class="text-3xl font-bold text-white mt-2">—</div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-sm text-slate-400">Total Present</div>
+          <div id="total-present" class="text-3xl font-bold text-emerald-400 mt-2">—</div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-sm text-slate-400">Total Late</div>
+          <div id="total-late" class="text-3xl font-bold text-amber-400 mt-2">—</div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-sm text-slate-400">Total Absent</div>
+          <div id="total-absent" class="text-3xl font-bold text-rose-400 mt-2">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARTS -->
+  <section class="pt-6 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-6">
+      <!-- Attendance Percentage Chart -->
+      <div class="glass rounded-3xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Attendance Percentage</h2>
+        <canvas id="attendance-percentage-chart"></canvas>
+      </div>
+
+      <!-- Subject-wise Performance -->
+      <div class="glass rounded-3xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Subject-wise Performance</h2>
+        <canvas id="subject-performance-chart"></canvas>
+      </div>
+
+      <!-- Monthly Trend Chart -->
+      <div class="glass rounded-3xl p-6 lg:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Monthly Attendance Trend</h2>
+        <canvas id="monthly-trend-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full py-12 bg-black/30 ring-1 ring-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8 items-center">
+      <div>
+        <a class="flex-none text-xl font-semibold text-white" href="index.html" aria-label="Brand">Face Sentinel</a>
+        <p class="mt-2 text-sm text-slate-400">Precision attendance for teams, classes, and events.</p>
+      </div>
+      <ul class="text-center">
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100" href="about.html">About</a>
+        </li>
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100"
+            href="index.html#features">Features</a>
+        </li>
+      </ul>
+      <div class="md:text-end space-x-2">
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase } from './lib/supabaseClient.js';
+
+    // Fetch attendance data
+    async function loadAnalytics() {
+      try {
+        // Fetch all attendance records
+        const { data: attendanceRecords, error } = await supabase
+          .from('attendance')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching attendance:', error);
+          return;
+        }
+
+        // Fetch all students
+        const { data: students } = await supabase
+          .from('students')
+          .select('name');
+
+        // Calculate statistics
+        const stats = {
+          totalStudents: students?.length || 0,
+          totalPresent: attendanceRecords?.filter(r => r.status === 'present' || !r.status).length || 0,
+          totalLate: attendanceRecords?.filter(r => r.status === 'late').length || 0,
+          totalAbsent: attendanceRecords?.filter(r => r.status === 'absent').length || 0
+        };
+
+        // Update stats cards
+        document.getElementById('total-students').textContent = stats.totalStudents;
+        document.getElementById('total-present').textContent = stats.totalPresent;
+        document.getElementById('total-late').textContent = stats.totalLate;
+        document.getElementById('total-absent').textContent = stats.totalAbsent;
+
+        // Fetch attendance stats from Supabase for accurate calculations
+        const { data: attendanceStats } = await supabase
+          .from('attendance_stats')
+          .select('*');
+
+        // Process data for charts
+        const studentAttendance = {};
+        const subjectAttendance = {};
+        const monthlyData = {};
+
+        // Use Supabase stats if available, otherwise calculate from records
+        if (attendanceStats && attendanceStats.length > 0) {
+          attendanceStats.forEach(stat => {
+            if (!studentAttendance[stat.student_name]) {
+              studentAttendance[stat.student_name] = { present: 0, late: 0, absent: 0, total: 0 };
+            }
+            studentAttendance[stat.student_name].present += stat.present_count || 0;
+            studentAttendance[stat.student_name].late += stat.late_count || 0;
+            studentAttendance[stat.student_name].absent += stat.absent_count || 0;
+            studentAttendance[stat.student_name].total +=
+              (stat.present_count || 0) + (stat.late_count || 0) + (stat.absent_count || 0);
+          });
+        } else {
+          // Fallback to calculating from attendance records
+          attendanceRecords?.forEach(record => {
+            // Student attendance
+            if (!studentAttendance[record.student_name]) {
+              studentAttendance[record.student_name] = { present: 0, late: 0, absent: 0, total: 0 };
+            }
+            studentAttendance[record.student_name].total++;
+            if (record.status === 'present' || !record.status) {
+              studentAttendance[record.student_name].present++;
+            } else if (record.status === 'late') {
+              studentAttendance[record.student_name].late++;
+            } else if (record.status === 'absent') {
+              studentAttendance[record.student_name].absent++;
+            }
+          });
+        }
+
+        // Process subject attendance from records
+        attendanceRecords?.forEach(record => {
+
+          // Subject attendance
+          if (record.subject) {
+            if (!subjectAttendance[record.subject]) {
+              subjectAttendance[record.subject] = { present: 0, late: 0, absent: 0 };
+            }
+            if (record.status === 'present' || !record.status) {
+              subjectAttendance[record.subject].present++;
+            } else if (record.status === 'late') {
+              subjectAttendance[record.subject].late++;
+            } else if (record.status === 'absent') {
+              subjectAttendance[record.subject].absent++;
+            }
+          }
+
+          // Monthly data
+          const date = new Date(record.created_at || record.timestamp);
+          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          if (!monthlyData[monthKey]) {
+            monthlyData[monthKey] = 0;
+          }
+          monthlyData[monthKey]++;
+        });
+
+        // Create charts
+        createAttendancePercentageChart(studentAttendance);
+        createSubjectPerformanceChart(subjectAttendance);
+        createMonthlyTrendChart(monthlyData);
+
+      } catch (error) {
+        console.error('Error loading analytics:', error);
+      }
+    }
+
+    function createAttendancePercentageChart(data) {
+      const ctx = document.getElementById('attendance-percentage-chart').getContext('2d');
+      const labels = Object.keys(data);
+      const percentages = labels.map(name => {
+        const s = data[name];
+        return s.total > 0 ? ((s.present + s.late) / s.total * 100).toFixed(1) : 0;
+      });
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Attendance %',
+            data: percentages,
+            backgroundColor: 'rgba(16, 185, 129, 0.5)',
+            borderColor: 'rgba(16, 185, 129, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: function (value) {
+                  return value + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createSubjectPerformanceChart(data) {
+      const ctx = document.getElementById('subject-performance-chart').getContext('2d');
+      const subjects = Object.keys(data);
+      const presentData = subjects.map(s => data[s].present);
+      const lateData = subjects.map(s => data[s].late);
+      const absentData = subjects.map(s => data[s].absent);
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: subjects,
+          datasets: [
+            {
+              label: 'Present',
+              data: presentData,
+              backgroundColor: 'rgba(16, 185, 129, 0.5)'
+            },
+            {
+              label: 'Late',
+              data: lateData,
+              backgroundColor: 'rgba(251, 191, 36, 0.5)'
+            },
+            {
+              label: 'Absent',
+              data: absentData,
+              backgroundColor: 'rgba(244, 63, 94, 0.5)'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    function createMonthlyTrendChart(data) {
+      const ctx = document.getElementById('monthly-trend-chart').getContext('2d');
+      const months = Object.keys(data).sort();
+      const counts = months.map(m => data[m]);
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Attendance Records',
+            data: counts,
+            borderColor: 'rgba(16, 185, 129, 1)',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Load analytics on page load
+    loadAnalytics();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="/face-api.min.js"></script>
+  <script type="module" defer src="app.js"></script>
+  <script defer src="/assets/js/main.js"></script>
+  <title>Face Sentinel — Face Attendance System</title>
+  <style>
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    .glass {
+      backdrop-filter: saturate(160%) blur(8px);
+      -webkit-backdrop-filter: saturate(160%) blur(8px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
+
+<body
+  class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-100 relative overflow-x-hidden">
+  <!-- Decorative gradient blobs -->
+  <div
+    class="pointer-events-none select-none absolute -top-24 -right-16 w-[28rem] h-[28rem] rounded-full bg-gradient-to-tr from-fuchsia-500/20 via-purple-500/20 to-blue-500/20 blur-3xl">
+  </div>
+  <div
+    class="pointer-events-none select-none absolute -bottom-24 -left-16 w-[30rem] h-[30rem] rounded-full bg-gradient-to-tr from-emerald-500/20 via-teal-400/20 to-cyan-400/20 blur-3xl">
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-4 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-3xl px-6 py-3 flex items-center justify-between shadow-lg">
+        <a href="index.html" class="inline-flex items-center gap-2">
+          <span
+            class="inline-block size-8 rounded-xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 shadow-inner"></span>
+          <span class="text-xl font-bold tracking-tight text-white">Face Sentinel</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#features" class="text-slate-200 hover:text-white transition">Features</a>
+          <a href="./about.html" class="text-slate-200 hover:text-white transition">About</a>
+          <a href="#showcase" class="text-slate-200 hover:text-white transition">Showcase</a>
+          <a href="./analytics.html" class="text-slate-200 hover:text-white transition">Analytics</a>
+        </nav>
+        <div class="hidden md:flex items-center gap-2">
+          <a href="attendance.html"
+            class="px-4 py-2 rounded-xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white shadow-lg shadow-fuchsia-800/30 transition">
+            Mark Attendance</a>
+        </div>
+        <button id="menu-toggle-button"
+          class="md:hidden inline-flex items-center justify-center size-10 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="size-5 text-white">
+            <line x1="3" x2="21" y1="6" y2="6" />
+            <line x1="3" x2="21" y1="12" y2="12" />
+            <line x1="3" x2="21" y1="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden mt-3 glass rounded-3xl px-6 py-4 md:hidden">
+        <div class="grid gap-3">
+          <a href="#features" class="text-slate-200 hover:text-white transition">Features</a>
+          <a href="./about.html" class="text-slate-200 hover:text-white transition">About</a>
+          <a href="#showcase" class="text-slate-200 hover:text-white transition">Showcase</a>
+          <a href="#" class="text-slate-200 hover:text-white transition">Blog</a>
+          <div class="h-px bg-white/10 my-2"></div>
+          <a href="register.html"
+            class="px-4 py-2 rounded-xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white shadow-lg shadow-fuchsia-800/30 transition text-center">Get
+            Started</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-28">
+      <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div>
+          <div
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
+            <span class="inline-block size-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Real‑time Face Attendance
+          </div>
+          <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+            Secure. Effortless. <span
+              class="bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-300 bg-clip-text text-transparent">Attendance</span>
+          </h1>
+          <p class="mt-4 text-slate-300 text-lg">Designed for precision and security. Face Sentinel enables seamless
+            attendance management with real‑time face recognition, exportable logs, and an intuitive interface.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="register.html"
+              class="px-5 py-3 rounded-2xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-semibold shadow-lg shadow-fuchsia-800/30 transition">
+              Get Started
+            </a>
+            <a href="attendance.html"
+              class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 font-semibold transition">
+              Open Attendance
+            </a>
+            <a href="#demo"
+              class="px-5 py-3 rounded-2xl bg-white/0 hover:bg-white/10 ring-1 ring-inset ring-white/10 text-slate-100 font-semibold transition inline-flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" class="size-5">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Watch demo
+            </a>
+          </div>
+
+          <!-- Trust row -->
+          <div class="mt-10 grid grid-cols-3 gap-4 text-xs text-slate-400">
+            <div class="glass rounded-2xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-white">98%</div>
+              Accuracy
+            </div>
+            <div class="glass rounded-2xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-white"><span class="align-top text-base">&lt;</span>200ms</div>
+              Latency
+            </div>
+            <div class="glass rounded-2xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-white">Export</div>
+              CSV/JSON
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview card -->
+        <div class="relative">
+          <div
+            class="absolute -inset-6 rounded-[28px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-fuchsia-500/10 blur-2xl">
+          </div>
+          <div class="relative rounded-[28px] p-2 bg-white/5 border border-white/10">
+            <div class="rounded-2xl overflow-hidden bg-slate-950/60 border border-white/10">
+              <div class="flex items-center gap-1 px-4 py-2 border-b border-white/10 bg-slate-900/60">
+                <span class="size-3 rounded-full bg-rose-400/80"></span>
+                <span class="size-3 rounded-full bg-amber-400/80"></span>
+                <span class="size-3 rounded-full bg-emerald-400/80"></span>
+                <span class="ml-2 text-xs text-slate-300">Live preview</span>
+              </div>
+              <img src="/assets/face.jpg" alt="Face Sentinel"
+                class="w-full max-h-[420px] object-cover animate-[float_6s_ease-in-out_infinite]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="relative pt-16 md:pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Why Face Sentinel</h2>
+        <p class="mt-3 text-slate-300 max-w-2xl mx-auto">A complete toolkit for modern attendance — with accuracy,
+          privacy, and simplicity at its core.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="group relative">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-tr from-emerald-500/30 via-teal-400/30 to-cyan-400/30 rounded-3xl blur opacity-0 group-hover:opacity-100 transition">
+          </div>
+          <div class="relative glass rounded-3xl p-6 h-full">
+            <div
+              class="size-10 grid place-items-center rounded-xl bg-emerald-500/20 text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" class="size-5">
+                <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                <path d="M21 7V5a2 2 0 0 0-2-2h-2" />
+                <path d="M17 21h2a2 2 0 0 0 2-2v-2" />
+                <rect x="7" y="7" width="10" height="10" rx="2" />
+              </svg>
+            </div>
+            <h3 class="mt-4 text-lg font-semibold">Real‑time Recognition</h3>
+            <p class="mt-2 text-slate-300">High‑precision face detection and identification with tiny face detector for
+              fast edge performance.</p>
+          </div>
+        </div>
+        <div class="group relative">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-tr from-fuchsia-500/30 via-violet-500/30 to-indigo-500/30 rounded-3xl blur opacity-0 group-hover:opacity-100 transition">
+          </div>
+          <div class="relative glass rounded-3xl p-6 h-full">
+            <div
+              class="size-10 grid place-items-center rounded-xl bg-fuchsia-500/20 text-fuchsia-300 ring-1 ring-inset ring-fuchsia-500/30">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" class="size-5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h3 class="mt-4 text-lg font-semibold">Secure & Private</h3>
+            <p class="mt-2 text-slate-300">On‑device processing and export so your data remains in your control. No
+              cloud dependency required.</p>
+          </div>
+        </div>
+        <div class="group relative">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-tr from-amber-500/30 via-orange-500/30 to-rose-500/30 rounded-3xl blur opacity-0 group-hover:opacity-100 transition">
+          </div>
+          <div class="relative glass rounded-3xl p-6 h-full">
+            <div
+              class="size-10 grid place-items-center rounded-xl bg-amber-500/20 text-amber-300 ring-1 ring-inset ring-amber-500/30">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" class="size-5">
+                <path d="M3 3h18" />
+                <path d="M3 9h18" />
+                <path d="M3 15h18" />
+                <path d="M3 21h18" />
+              </svg>
+            </div>
+            <h3 class="mt-4 text-lg font-semibold">Export & Analytics</h3>
+            <p class="mt-2 text-slate-300">Download attendance in CSV/JSON and analyze participation trends with ease.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section id="showcase" class="pt-16 md:pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-3xl p-6 md:p-10 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h3 class="text-2xl md:text-3xl font-extrabold">A delightful operator experience</h3>
+          <p class="mt-3 text-slate-300">One‑click capture, instant recognition, and clean UI for daily operations. No
+            manual roll calls, no spreadsheets, just tap and go.</p>
+          <ul class="mt-5 space-y-2 text-slate-300">
+            <li class="flex items-start gap-3"><span
+                class="size-5 rounded-md bg-emerald-500/20 ring-1 ring-emerald-500/30 grid place-items-center text-emerald-300">✓</span>
+              Works with your default webcam</li>
+            <li class="flex items-start gap-3"><span
+                class="size-5 rounded-md bg-emerald-500/20 ring-1 ring-emerald-500/30 grid place-items-center text-emerald-300">✓</span>
+              Register once, recognize everywhere</li>
+            <li class="flex items-start gap-3"><span
+                class="size-5 rounded-md bg-emerald-500/20 ring-1 ring-emerald-500/30 grid place-items-center text-emerald-300">✓</span>
+              Exports for HR/Academics</li>
+          </ul>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="attendance.html"
+              class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 font-semibold transition">Open
+              Attendance</a>
+            <a href="register.html"
+              class="px-5 py-3 rounded-2xl bg-gradient-to-tr from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-semibold shadow-lg shadow-emerald-800/30 transition">Register
+              Faces</a>
+          </div>
+        </div>
+        <div class="relative">
+          <div
+            class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-fuchsia-500/10 blur-xl">
+          </div>
+          <div class="relative aspect-video w-full rounded-2xl overflow-hidden ring-1 ring-inset ring-white/10">
+            <!-- Embedded demo video (external host). Replace src with your preferred AI demo URL if needed. -->
+            <iframe id="demo" class="size-full" src="https://www.youtube.com/embed/DLQd3R9hlFQ" title="FaceGuard Demo"
+              loading="lazy" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="pt-16 md:pt-24 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="relative overflow-hidden rounded-3xl">
+        <div
+          class="absolute inset-0 bg-[linear-gradient(110deg,rgba(255,255,255,0.06),rgba(255,255,255,0.01),rgba(255,255,255,0.06))] bg-[length:200%_100%] animate-[shimmer_6s_linear_infinite]">
+        </div>
+        <div
+          class="relative grid md:grid-cols-2 gap-6 items-center bg-gradient-to-tr from-slate-900/80 via-slate-900/60 to-slate-800/80 p-8 md:p-12 ring-1 ring-inset ring-white/10">
+          <div>
+            <h3 class="text-2xl md:text-3xl font-extrabold">Start in minutes</h3>
+            <p class="mt-2 text-slate-300">Register faces, recognize attendance, and export records — all from your
+              browser. No setup wizard, no extra installs.</p>
+          </div>
+          <div class="flex justify-end items-center gap-3">
+            <a href="register.html"
+              class="px-5 py-3 rounded-2xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-semibold shadow-lg shadow-fuchsia-800/30 transition">Get
+              Started</a>
+            <a href="attendance.html"
+              class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 font-semibold transition">Open
+              Attendance</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full py-12 bg-black/30 ring-1 ring-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8 items-center">
+      <div>
+        <a class="flex-none text-xl font-semibold text-white" href="index.html" aria-label="Brand">FaceGuard</a>
+        <p class="mt-2 text-sm text-slate-400">Precision attendance for teams, classes, and events.</p>
+      </div>
+      <ul class="text-center">
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100" href="about.html">About</a>
+        </li>
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100" href="#features">Features</a>
+        </li>
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100" href="#showcase">Showcase</a>
+        </li>
+      </ul>
+      <div class="md:text-end space-x-2">
+      </div>
+      <div class="mt-8 text-center text-xs text-slate-500">created by Prachiti Patil &middot; <a class="hover:underline"
+          href="#" target="_blank">Harshita Tambe</a> &middot; <a class="hover:underline"
+          href="https://github.com/Chan-d-an" target="_blank">Riddhi Mirjulkar</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle (no external dependency)
+    const btn = document.getElementById('menu-toggle-button');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+  </script>
+</body>
+
+</html>

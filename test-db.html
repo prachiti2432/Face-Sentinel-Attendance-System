@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Supabase Connection Test</title>
+</head>
+
+<body>
+    <h1>Supabase Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="error" style="color: red; margin-top: 10px;"></div>
+
+    <script type="module">
+        import { supabase } from './lib/supabaseClient.js';
+
+        async function checkConnection() {
+            const statusDiv = document.getElementById('status');
+            const errorDiv = document.getElementById('error');
+
+            try {
+                // Try to select just one row or zero rows
+                const { data, error, count } = await supabase
+                    .from('students')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) {
+                    throw error;
+                }
+
+                statusDiv.innerText = "✅ Successfully connected to Supabase!";
+                statusDiv.style.color = "green";
+                console.log("Supabase connection successful", { count });
+            } catch (err) {
+                statusDiv.innerText = "❌ Failed to connect to Supabase.";
+                statusDiv.style.color = "red";
+                errorDiv.innerText = "Error: " + err.message + "\n\nDetails: " + JSON.stringify(err, null, 2);
+                console.error("Supabase connection failed", err);
+            }
+        }
+
+        checkConnection();
+    </script>
+</body>
+
+</html>

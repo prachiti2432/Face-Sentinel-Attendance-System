@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/face-api.min.js"></script>
+  <script type="module" src="app.js"></script>
+  <script type="module" defer src="/assets/js/auth.js"></script>
+  <title>Register — Face Sentinel</title>
+  <style>
+    .glass {
+      backdrop-filter: saturate(160%) blur(8px);
+      -webkit-backdrop-filter: saturate(160%) blur(8px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+
+<body
+  class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-100 relative overflow-x-hidden">
+  <div
+    class="pointer-events-none select-none absolute -top-24 -right-16 w-[28rem] h-[28rem] rounded-full bg-gradient-to-tr from-fuchsia-500/20 via-purple-500/20 to-blue-500/20 blur-3xl">
+  </div>
+  <div
+    class="pointer-events-none select-none absolute -bottom-24 -left-16 w-[30rem] h-[30rem] rounded-full bg-gradient-to-tr from-emerald-500/20 via-teal-400/20 to-cyan-400/20 blur-3xl">
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-4 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-3xl px-6 py-3 flex items-center justify-between shadow-lg">
+        <a href="index.html" class="inline-flex items-center gap-2">
+          <span
+            class="inline-block size-8 rounded-xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 shadow-inner"></span>
+          <span class="text-xl font-bold tracking-tight text-white">Face Sentinel</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="index.html#features" class="text-slate-200 hover:text-white transition">Features</a>
+          <a href="./about.html" class="text-slate-200 hover:text-white transition">About</a>
+          <a href="index.html#showcase" class="text-slate-200 hover:text-white transition">Showcase</a>
+          <a href="#" class="text-slate-200 hover:text-white transition">Blog</a>
+        </nav>
+        <div class="hidden md:flex items-center gap-2">
+          <button id="logout-btn"
+            class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 transition">Logout</button>
+        </div>
+        <button id="menu-toggle-button"
+          class="md:hidden inline-flex items-center justify-center size-10 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="size-5 text-white">
+            <line x1="3" x2="21" y1="6" y2="6" />
+            <line x1="3" x2="21" y1="12" y2="12" />
+            <line x1="3" x2="21" y1="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden mt-3 glass rounded-3xl px-6 py-4 md:hidden">
+        <div class="grid gap-3">
+          <a href="index.html#features" class="text-slate-200 hover:text-white transition">Features</a>
+          <a href="./about.html" class="text-slate-200 hover:text-white transition">About</a>
+          <a href="index.html#showcase" class="text-slate-200 hover:text-white transition">Showcase</a>
+          <a href="#" class="text-slate-200 hover:text-white transition">Blog</a>
+          <div class="h-px bg-white/10 my-2"></div>
+          <a href="register.html"
+            class="px-4 py-2 rounded-xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white shadow-lg shadow-fuchsia-800/30 transition text-center">Get
+            Started</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HEADING -->
+  <section class="pt-10 md:pt-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <div
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
+            <span class="inline-block size-2 rounded-full bg-violet-400 animate-pulse"></span>
+            Registration
+          </div>
+          <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">New <span
+              class="bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-300 bg-clip-text text-transparent">Student</span>
+            Registration</h1>
+          <p class="mt-1 text-slate-300">Enter your name and register your face using your webcam. Ensure even lighting
+            for best results.</p>
+        </div>
+        <a href="index.html"
+          class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 transition">
+          Home
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="size-4">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="pt-6 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 items-start">
+      <div class="relative">
+        <div
+          class="absolute -inset-4 rounded-[28px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-fuchsia-500/10 blur-2xl">
+        </div>
+        <div class="relative rounded-[28px] p-2 bg-white/5 border border-white/10 shadow-xl">
+          <div class="rounded-2xl overflow-hidden bg-slate-950/60 border border-white/10">
+            <div class="flex items-center gap-1 px-4 py-2 border-b border-white/10 bg-slate-900/60">
+              <span class="size-3 rounded-full bg-rose-400/80"></span>
+              <span class="size-3 rounded-full bg-amber-400/80"></span>
+              <span class="size-3 rounded-full bg-emerald-400/80"></span>
+              <span class="ml-2 text-xs text-slate-300">Webcam</span>
+            </div>
+            <video id="video" width="100%" height="auto" autoplay muted playsinline
+              class="w-full max-h-[520px] object-cover bg-slate-800"></video>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-3xl p-6 ring-1 ring-inset ring-white/10 grid gap-5">
+        <label class="text-sm text-slate-200" for="name">Full Name</label>
+        <input id="name" type="text" placeholder="Enter your full name"
+          class="rounded-2xl bg-white/10 border border-white/10 focus:ring-2 focus:ring-emerald-500/40 focus:outline-none px-4 h-12 placeholder:text-slate-400" />
+        <div class="grid sm:grid-cols-2 gap-3">
+          <button id="register"
+            class="w-full h-[48px] text-[16px] px-5 rounded-2xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-semibold shadow-lg shadow-fuchsia-800/30 transition">Register
+            Face</button>
+          <a href="attendance.html" id="recognize"
+            class="w-full h-[48px] text-[16px] grid place-items-center rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 font-semibold transition">Go
+            to Attendance</a>
+        </div>
+        <button id="export"
+          class="w-full h-[48px] text-[16px] px-5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 text-slate-100 font-semibold transition">Export
+          Attendance</button>
+        <a href="index.html"
+          class="w-full h-[48px] text-[16px] grid place-items-center rounded-2xl bg-white/0 hover:bg-white/10 ring-1 ring-inset ring-white/10 text-slate-100 font-semibold transition">Back
+          to Home</a>
+        <p class="text-xs text-slate-400">Tip: Center your face in the frame and remove hats or masks for better
+          registration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full py-12 bg-black/30 ring-1 ring-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8 items-center">
+      <div>
+        <a class="flex-none text-xl font-semibold text-white" href="index.html" aria-label="Brand">Face Sentinel</a>
+        <p class="mt-2 text-sm text-slate-400">Precision attendance for teams, classes, and events.</p>
+      </div>
+      <ul class="text-center">
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100" href="about.html">About</a>
+        </li>
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100"
+            href="index.html#features">Features</a>
+        </li>
+        <li
+          class="inline-block relative pe-8 last:pe-0 last-of-type:before:hidden before:absolute before:top-1/2 before:end-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-500">
+          <a class="inline-flex gap-x-2 text-sm text-gray-200 hover:text-gray-100"
+            href="index.html#showcase">Showcase</a>
+        </li>
+      </ul>
+      <div class="md:text-end space-x-2">
+      </div>
+      <div class="mt-8 text-center text-xs text-slate-500">created by Prachiti Patil &middot; <a class="hover:underline"
+          href="#" target="_blank">Harshita Tambe</a> &middot; <a class="hover:underline"
+          href="https://github.com/Chan-d-an" target="_blank">Riddhi Mirjulkar</a></div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { signOut } from '/assets/js/auth.js';
+
+    // Mobile menu toggle
+    const btn = document.getElementById('menu-toggle-button');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+
+    // Logout logic
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', signOut);
+    }
+  </script>
+</body>
+
+</html>
