@@ -13,7 +13,7 @@ A web-based attendance system using TensorFlow.js and FaceAPI.js for face recogn
 
 1. **Clone the Repository**:
     ```sh
-    git clone https://github.com/kuldeepsharma1/Face-attendance-system.git
+    https://github.com/prachiti2432/CPP-FINAL-
     ```
     ```sh
     cd Face-attendance-system
@@ -64,3 +64,4 @@ This project is licensed under the GNU License. See the [LICENSE](LICENSE) file 
 ---
 
 **Note**: Ensure that the models are correctly placed in the `/models` directory and paths are correctly set up in your local environment.
+
